@@ -1,0 +1,26 @@
+{
+  "name" : "ignaszak/error-handler",
+  "type" : "library",
+  "description" : "Error Handler",
+  "keywords" : [
+    "exception",
+    "error",
+    "handler"
+  ],
+  "license" : "MIT",
+  "authors" : [{
+    "name" : "Tomasz Ignaszak",
+    "email" : "tomek.ignaszak@gmail.com"
+  }
+  ],
+  "require" : {
+    "php" : ">=7.0",
+    "phpunit/phpunit" : "*"
+  },
+  "autoload" : {
+    "psr-4" : {
+      "Ignaszak\\ErrorHandler\\" : "src/",
+      "Test\\" : "tests/"
+    }
+  }
+}
