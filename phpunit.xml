@@ -1,0 +1,22 @@
+<phpunit
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        stopOnRisky="false">
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+    </filter>
+
+    <testsuites>
+        <testsuite name="ErrorHandlerTests">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

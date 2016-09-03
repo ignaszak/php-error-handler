@@ -15,7 +15,8 @@
   ],
   "require" : {
     "php" : ">=7.0",
-    "phpunit/phpunit" : "*"
+    "phpunit/phpunit" : "*",
+    "ignaszak/testing-tools" : "dev-master"
   },
   "autoload" : {
     "psr-4" : {
