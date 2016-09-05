@@ -47,7 +47,7 @@
                 display: block;
                 font-size: 12px;
             }
-            #errors {
+            #errors, #globals, #vars {
                 padding: 20px 50px 20px 50px;
             }
             #errors .header {
@@ -63,7 +63,7 @@
             }
         }
         .navbar-default {
-            border: 0px !important;
+            border: 0 !important;
         }
         li.active {
             background-color: #2a9fd6;
@@ -76,20 +76,21 @@
             background-color: #222222;
             position: absolute;
             top: 51px;
-            bottom: 0px;
-            right: 0px;
+            bottom: 0;
+            right: 0;
             left: 300px;
             overflow: scroll;
             overflow-x: hidden;
         }
         pre.none {
-            border: 0px;
+            border: 0;
             background-color: transparent;
             display: block;
-            white-space: pre-wrap;       /* css-3 */
-            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-            white-space: -pre-wrap;      /* Opera 4-6 */
-            white-space: -o-pre-wrap;    /* Opera 7 */
+            overflow: hidden;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
             word-wrap: break-word;
         }
         .syntaxhighlighter {
@@ -190,13 +191,15 @@
                                     <div class="modal-body">
                                         <table class="table table-striped">
                                             <thead>
-                                                <th>Number</th>
-                                                <th>Value</th>
+                                                <th style="text-align: center">Number</th>
+                                                <th style="text-align: center">Value</th>
                                             </thead>
                                             <tbody>
                                                 <?php foreach($trace['args'] as $number => $value): ?>
                                                     <tr>
-                                                        <td><?php echo $number; ?></td>
+                                                        <td style="text-align: center">
+                                                            <?php echo $number + 1; ?>
+                                                        </td>
                                                         <td>
                                                             <pre class="none text-success"><?php echo $value; ?></pre>
                                                         </td>
@@ -226,8 +229,8 @@
         <div class="tab" id="globals">
             <table class="table table-striped">
                 <thead>
-                    <th>Name</th>
-                    <th>Value</th>
+                    <th style="text-align: center">Name</th>
+                    <th style="text-align: center">Value</th>
                 </thead>
                 <tbody>
                     <?php foreach($this->data['globals'] as $type => $array): ?>
@@ -251,8 +254,8 @@
         <div class="tab" id="vars">
             <table class="table table-striped">
                 <thead>
-                <th>Name</th>
-                <th>Value</th>
+                <th style="text-align: center">Name</th>
+                <th style="text-align: center">Value</th>
                 </thead>
                 <tbody>
                 <?php
@@ -327,11 +330,19 @@
 <!-- SyntaxHighlighter JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPhp.min.js"></script>
+<!-- Readmore JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Readmore.js/2.2.0/readmore.js"></script>
 
 <script>
     SyntaxHighlighter.all();
 
     $(document).ready(function() {
+        $('pre.none').readmore({
+            speed: 75,
+            moreLink: '<a href="#" class="btn btn-info btn-xs"><i class="fa fa-chevron-down" aria-hidden="true"></i> More</a>',
+            lessLink: '<a href="#" class="btn btn-info btn-xs"><i class="fa fa-chevron-up" aria-hidden="true"></i> Less</a>'
+        });
+
         $('#errors').children('div:not(.active)').hide(0);
         $('.side-nav a').click(function (e) {
             e.preventDefault();

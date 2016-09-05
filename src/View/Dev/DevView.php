@@ -51,14 +51,13 @@ class DevView extends IView
             );
             foreach ($error['trace'] as $trace) {
                 if (! array_key_exists($trace['file'], $this->files['full'])) {
-                    $this->files['full'][$error['file']] = file_get_contents($trace['file']);
+                    $this->files['full'][$trace['file']] = file_get_contents($trace['file']);
                 }
                 $this->files['trace'][$key][] = $this->previewFile(
                     $trace['file'], $trace['line'], 5
                 );
             }
         }
-
     }
 
     private function previewFile(string $file, int $line, int $offset = 12): array
@@ -67,21 +66,23 @@ class DevView extends IView
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             $diff = $line - $offset;
             $begin = $diff < 0 ? 0 : $diff;
-
             $body = '';
             $fileIterator = new \LimitIterator(
                 new \SplFileObject($file), $begin, $offset*2
             );
-            $i = 0;
-            $add = 1;
+            $stop = false;
+            $counter = 1;
             foreach ($fileIterator as $row) {
-                if ($i == 0 && $row == PHP_EOL) $add = 2;
+                if (! $stop &&  $row == PHP_EOL){
+                    ++ $counter;
+                } else {
+                    $stop = true;
+                }
                 $body .= $row;
-                ++ $i;
             }
             $return = [
                 'brush'     => $ext,
-                'firstLine' => $begin + $add,
+                'firstLine' => $begin + $counter,
                 'highlight' => $line,
                 'body'      => $body
             ];
