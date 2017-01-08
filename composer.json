@@ -11,8 +11,7 @@
   "authors" : [{
     "name" : "Tomasz Ignaszak",
     "email" : "tomek.ignaszak@gmail.com"
-  }
-  ],
+  }],
   "require" : {
     "php" : ">=7.0",
     "phpunit/phpunit" : "*"

@@ -25,7 +25,7 @@ class Controller implements IController
     /**
      * @var bool
      */
-    public $showSuppressedErrors = true;
+    public $showSuppressedErrors = false;
 
     /**
      * @var int
