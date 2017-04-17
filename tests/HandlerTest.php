@@ -11,13 +11,15 @@ declare(strict_types=1);
 namespace Test;
 
 use Ignaszak\ErrorHandler\Handler;
+use Ignaszak\ErrorHandler\View\IView;
 use Ignaszak\TestingTools\Test;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class HandlerTest
  * @package Test
  */
-class HandlerTest extends \PHPUnit_Framework_TestCase
+class HandlerTest extends TestCase
 {
 
     /**
@@ -27,7 +29,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->handler = Handler::start();
+        $this->handler = Handler::start($this->createMock(IView::class));
         Test::$object = $this->handler;
     }
 
@@ -36,22 +38,6 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'Ignaszak\ErrorHandler\Controller\Controller',
             Test::get('controller')
-        );
-    }
-
-    public function testEmptyConstructor()
-    {
-        $this->assertNull(Test::get('view'));
-    }
-
-    public function testNotEmptyConstructor()
-    {
-        $mock = $this->getMockBuilder('Ignaszak\ErrorHandler\View\IView')
-            ->getMock();
-        $mock->expects($this->once())->method('setHandler');
-        $this->assertInstanceOf(
-            'Ignaszak\ErrorHandler\View\IView',
-            Test::get('view', Handler::start($mock))
         );
     }
 
@@ -81,12 +67,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         Test::inject('controller', $mock);
         $this->handler->register();
         trigger_error('test error', E_USER_NOTICE);
-    }
-
-    public function testDontCatchSuppressed()
-    {
-        $this->handler->register();
-        @include 'nonExistingFile';
+        ob_get_clean();
     }
 
     public function testCatch()
@@ -101,5 +82,6 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         } catch (\Exception $e) {
             $this->handler->catch($e);
         }
+        ob_get_clean();
     }
 }

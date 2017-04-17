@@ -12,12 +12,13 @@ namespace Test\Controller;
 
 use Ignaszak\ErrorHandler\Controller\Controller;
 use Ignaszak\TestingTools\Test;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ControllerTest
  * @package Test\Controller
  */
-class ControllerTest extends \PHPUnit_Framework_TestCase
+class ControllerTest extends TestCase
 {
 
     /**
@@ -43,27 +44,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
     {
         set_error_handler(function ($number, $message, $file, $line) {
             $this->assertTrue(Test::call('isErrorSuppressed'));
-        });
-        @triggerSuppressedError;
-    }
-
-    public function testNoSuppressedError()
-    {
-        set_error_handler(function ($number, $message, $file, $line) {
-            $this->assertFalse(Test::call('isErrorSuppressed'));
-        });
-        trigger_error('test');
-    }
-
-    public function testRegisterOnlyNonSuppressedErrors()
-    {
-        set_error_handler(function ($number, $message, $file, $line) {
-            $this->assertTrue(Test::call('hasErrorPermissionToRegister'));
-        });
-        trigger_error('test');
-
-        set_error_handler(function ($number, $message, $file, $line) {
-            $this->assertFalse(Test::call('hasErrorPermissionToRegister'));
         });
         @triggerSuppressedError;
     }

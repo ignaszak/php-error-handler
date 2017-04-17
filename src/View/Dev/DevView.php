@@ -34,9 +34,9 @@ class DevView extends IView
     ];
 
     public function execute()
-    {//echo '<pre>';
-        $this->data = $this->controller->getData();//print_r($this->data);exit;
-        $this->setFilesContent();//print_r($this->files);exit;
+    {
+        $this->data = $this->controller->getData();
+        $this->setFilesContent();
         include __DIR__ . '/theme/index.html';
     }
 

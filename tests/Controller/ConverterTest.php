@@ -11,12 +11,13 @@ declare(strict_types=1);
 namespace Test\Controller;
 
 use Ignaszak\ErrorHandler\Controller\Converter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConverterTest
  * @package Test\Controller
  */
-class ConverterTest extends \PHPUnit_Framework_TestCase
+class ConverterTest extends TestCase
 {
 
     /**

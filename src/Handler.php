@@ -37,10 +37,10 @@ class Handler implements IHandler
     private $plugins = [];
 
     /**
-     * @param IView|null $view
+     * @param IView $view
      * @return IHandler
      */
-    public static function start(IView $view = null): IHandler
+    public static function start(IView $view): IHandler
     {
         return new Handler($view);
     }
@@ -49,13 +49,11 @@ class Handler implements IHandler
      * Handler constructor.
      * @param IView $view
      */
-    private function __construct($view)
+    private function __construct(IView $view)
     {
         $this->controller = new Controller();
-        if ($view instanceof IView) {
-            $this->view = $view;
-            $this->view->setController($this->controller);
-        }
+        $this->view = $view;
+        $this->view->setController($this->controller);
     }
 
     public function __destruct()
